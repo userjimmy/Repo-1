@@ -32,8 +32,9 @@
 
         .container {
             max-width: 1400px;
+            width: 100%;
             margin: 0 auto;
-            padding: 20px;
+            padding: 15px;
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -41,30 +42,33 @@
 
         header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            padding: 0 10px;
         }
 
         header h1 {
             color: var(--primary);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
         }
 
         .tabs {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 8px;
+            margin-bottom: 15px;
             flex-wrap: wrap;
         }
 
         .tab-button {
-            padding: 10px 20px;
+            padding: 8px 15px;
             background: none;
             border: none;
             border-bottom: 3px solid transparent;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s;
+            font-size: 0.9rem;
         }
 
         .tab-button:hover {
@@ -80,9 +84,10 @@
             display: none;
             background: white;
             border-radius: 8px;
-            padding: 20px;
+            padding: 15px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            width: 100%;
         }
 
         .tab-content.active {
@@ -97,19 +102,21 @@
 
         .folders-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+            width: 100%;
         }
 
         .folder {
             background: white;
             border: 1px solid #ddd;
             border-radius: 8px;
-            padding: 20px;
+            padding: 15px;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s;
+            min-width: 0;
         }
 
         .folder:hover {
@@ -119,34 +126,43 @@
         }
 
         .folder i {
-            font-size: 2.5rem;
+            font-size: clamp(2rem, 8vw, 2.5rem);
             color: #FFB74D;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             display: block;
+        }
+
+        .folder-name {
+            font-size: clamp(0.9rem, 3vw, 1rem);
+            word-break: break-word;
         }
 
         .files-container {
             display: none;
-            margin-top: 20px;
+            margin-top: 15px;
+            width: 100%;
         }
 
         .file {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px;
+            padding: 10px;
             border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
         }
 
         .file i {
             color: var(--accent);
-            margin-right: 10px;
+            margin-right: 8px;
+            font-size: 1.1rem;
         }
 
         .file-actions a {
             color: var(--primary);
-            margin-left: 10px;
+            margin-left: 8px;
             text-decoration: none;
+            font-size: 0.85rem;
         }
 
         .back-button {
@@ -154,7 +170,11 @@
             border: none;
             color: var(--primary);
             cursor: pointer;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .loading-spinner {
@@ -174,13 +194,19 @@
         .error {
             color: var(--accent);
             text-align: center;
+            font-size: 0.9rem;
         }
 
         /* Footer styles */
         footer {
             text-align: center;
             margin-top: auto;
-            padding: 20px;
+            padding: 15px;
+            width: 100%;
+        }
+
+        footer p {
+            font-size: 0.9rem;
         }
 
         .logout-button {
@@ -192,6 +218,9 @@
             cursor: pointer;
             margin-top: 10px;
             transition: background-color 0.3s;
+            font-size: 0.9rem;
+            width: auto;
+            display: inline-block;
         }
 
         .logout-button:hover {
@@ -200,7 +229,7 @@
 
         /* Login form styles */
         .login-container {
-            display: none;
+            display: flex;
             position: fixed;
             top: 0;
             left: 0;
@@ -210,11 +239,12 @@
             z-index: 1000;
             justify-content: center;
             align-items: center;
+            padding: 15px;
         }
 
         .login-form {
             background-color: white;
-            padding: 30px;
+            padding: 25px;
             border-radius: 8px;
             width: 100%;
             max-width: 400px;
@@ -223,8 +253,9 @@
 
         .login-form h2 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: var(--primary);
+            font-size: 1.5rem;
         }
 
         .form-group {
@@ -235,6 +266,7 @@
             display: block;
             margin-bottom: 5px;
             font-weight: 600;
+            font-size: 0.95rem;
         }
 
         .form-group input {
@@ -242,7 +274,7 @@
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            font-size: 16px;
+            font-size: 1rem;
         }
 
         .login-button {
@@ -252,7 +284,7 @@
             color: white;
             border: none;
             border-radius: 4px;
-            font-size: 16px;
+            font-size: 1rem;
             cursor: pointer;
             transition: background-color 0.3s;
         }
@@ -266,44 +298,91 @@
             text-align: center;
             margin-top: 10px;
             display: none;
+            font-size: 0.9rem;
+        }
+
+        .github-link-container {
+            margin: 15px 0;
+            padding: 12px;
+            background: #f6f8fa;
+            border-radius: 6px;
+            border: 1px solid #e1e4e8;
+            overflow-wrap: break-word;
+        }
+
+        .github-link {
+            color: #0366d6;
+            text-decoration: none;
+            font-family: monospace;
+            word-break: break-all;
+            font-size: 0.85rem;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
             .folders-container {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 12px;
             }
             
             .tab-button {
-                padding: 8px 15px;
-                font-size: 0.9rem;
+                padding: 7px 12px;
+                font-size: 0.85rem;
+            }
+            
+            .folder {
+                padding: 12px;
             }
         }
 
         @media (max-width: 480px) {
             .container {
-                padding: 15px;
+                padding: 10px;
             }
             
             .tabs {
-                flex-direction: column;
+                flex-direction: row;
+                justify-content: space-around;
+                gap: 5px;
             }
             
             .tab-button {
-                margin: 5px 0;
-                border-bottom: none;
-                border-left: 3px solid transparent;
-                text-align: left;
+                margin: 0;
+                border-bottom: 3px solid transparent;
+                border-left: none;
+                text-align: center;
+                flex: 1;
+                min-width: 80px;
+                padding: 8px 5px;
             }
             
             .tab-button.active {
-                border-bottom: none;
-                border-left: 3px solid var(--primary);
+                border-bottom: 3px solid var(--primary);
+                border-left: none;
             }
             
             .folders-container {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
                 gap: 10px;
+            }
+            
+            .login-form {
+                padding: 20px;
+            }
+            
+            .login-form h2 {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .folders-container {
+                grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            }
+            
+            .tab-button {
+                font-size: 0.8rem;
+                padding: 6px 3px;
             }
         }
     </style>
