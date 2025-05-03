@@ -305,8 +305,8 @@
             font-size: 0.9rem;
             cursor: pointer;
             transition: background-color 0.3s;
-            display: block; /* Changed from inline-block to block */
-            margin: 20px auto 0; /* Top margin 20px, horizontal auto for centering */
+            display: block;
+            margin: 20px auto 0;
         }
 
         .login-button:hover {
@@ -321,21 +321,33 @@
             font-size: 0.9rem;
         }
 
-        .github-link-container {
+        .drive-link-container {
             margin: 15px 0;
             padding: 12px;
             background: #f6f8fa;
             border-radius: 6px;
             border: 1px solid #e1e4e8;
             overflow-wrap: break-word;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .github-link {
+        .drive-link {
             color: #0366d6;
             text-decoration: none;
-            font-family: monospace;
-            word-break: break-all;
-            font-size: 0.85rem;
+            font-family: inherit;
+            font-size: 0.95rem;
+        }
+
+        .drive-link::after {
+            content: " (Link)";
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .drive-link-text {
+            display: none;
         }
 
         @media (max-width: 768px) {
@@ -501,17 +513,17 @@
             });
             
             function initializeApp() {
-                // GitHub repository configuration with specific links
+                // Google Drive folder configuration with specific links
                 const folderLinks = {
                     class: {
-                        'Units': 'https://github.com/userjimmy/Repo-1/blob/main/Units',
-                        'CATs': 'https://github.com/userjimmy/Repo-1/blob/main/CATs'
+                        'Units': 'https://drive.google.com/drive/folders/units-folder-id',
+                        'CATs': 'https://drive.google.com/drive/folders/cats-folder-id'
                     },
                     oracle: {
                         'Oracle': 'https://drive.google.com/drive/u/4/folders/16Z57QWhtRTawz_JR63XkSQbLlLQQtoq8'
                     },
                     other: {
-                        'Other': 'https://github.com/userjimmy/Repo-1/blob/main/Other'
+                        'Other': 'https://drive.google.com/drive/folders/other-folder-id'
                     }
                 };
 
@@ -557,7 +569,7 @@
                     });
                 }
 
-                // Load folder contents with GitHub link
+                // Load folder contents with Google Drive link
                 function loadFolderContents(tabId, folderName, folderUrl) {
                     const filesContainer = document.getElementById(`${tabId}-files`);
                     const foldersContainer = document.getElementById(`${tabId}-folders`);
@@ -567,10 +579,11 @@
                             <i class="fas fa-arrow-left"></i> Back to folders
                         </button>
                         <h3>${folderName}</h3>
-                        <div class="github-link-container">
-                            <a href="${folderUrl}" target="_blank" class="github-link">
-                                <i class="fab fa-Oracle"></i> 
-                                ORACLE FILES: ${folderUrl}
+                        <div class="drive-link-container">
+                            <i class="fab fa-google-drive"></i>
+                            <a href="${folderUrl}" target="_blank" class="drive-link">
+                                <span class="drive-link-text">${folderUrl}</span>
+                                View ${folderName} on Google Drive
                             </a>
                         </div>
                     `;
