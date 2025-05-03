@@ -30,6 +30,17 @@
             min-height: 100vh;
         }
 
+        .sticky-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+            padding: 15px 0;
+        }
+
         .container {
             max-width: 1400px;
             width: 100%;
@@ -38,37 +49,45 @@
             flex: 1;
             display: flex;
             flex-direction: column;
+            margin-top: 150px;
         }
 
         header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             padding: 0 10px;
         }
 
         header h1 {
             color: var(--primary);
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             font-size: clamp(1.5rem, 5vw, 2.2rem);
         }
 
         .tabs {
             display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 0;
+            background-color: white;
+            padding: 0 20px 15px;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .tab-button {
-            padding: 8px 15px;
+            padding: 10px 20px;
             background: none;
             border: none;
             border-bottom: 3px solid transparent;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s;
-            font-size: 0.9rem;
+            font-size: 1rem;
+            flex: 1;
+            text-align: center;
+            min-width: 100px;
+            margin: 0 5px;
         }
 
         .tab-button:hover {
@@ -84,10 +103,11 @@
             display: none;
             background: white;
             border-radius: 8px;
-            padding: 15px;
+            padding: 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             margin-bottom: 20px;
             width: 100%;
+            margin-top: 15px;
         }
 
         .tab-content.active {
@@ -197,7 +217,6 @@
             font-size: 0.9rem;
         }
 
-        /* Footer styles */
         footer {
             text-align: center;
             margin-top: auto;
@@ -227,7 +246,6 @@
             background-color: #d32f2f;
         }
 
-        /* Login form styles */
         .login-container {
             display: flex;
             position: fixed;
@@ -278,15 +296,17 @@
         }
 
         .login-button {
-            width: 100%;
-            padding: 12px;
+            width: auto;
+            padding: 8px 16px;
             background-color: var(--primary);
             color: white;
             border: none;
             border-radius: 4px;
-            font-size: 1rem;
+            font-size: 0.9rem;
             cursor: pointer;
             transition: background-color 0.3s;
+            display: block; /* Changed from inline-block to block */
+            margin: 20px auto 0; /* Top margin 20px, horizontal auto for centering */
         }
 
         .login-button:hover {
@@ -318,16 +338,15 @@
             font-size: 0.85rem;
         }
 
-        /* Responsive Design */
         @media (max-width: 768px) {
-            .folders-container {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-                gap: 12px;
+            .container {
+                margin-top: 140px;
             }
             
             .tab-button {
-                padding: 7px 12px;
-                font-size: 0.85rem;
+                padding: 8px 15px;
+                font-size: 0.9rem;
+                min-width: 80px;
             }
             
             .folder {
@@ -337,33 +356,19 @@
 
         @media (max-width: 480px) {
             .container {
+                margin-top: 130px;
                 padding: 10px;
             }
             
             .tabs {
-                flex-direction: row;
-                justify-content: space-around;
-                gap: 5px;
+                padding: 0 10px 10px;
             }
             
             .tab-button {
-                margin: 0;
-                border-bottom: 3px solid transparent;
-                border-left: none;
-                text-align: center;
-                flex: 1;
-                min-width: 80px;
-                padding: 8px 5px;
-            }
-            
-            .tab-button.active {
-                border-bottom: 3px solid var(--primary);
-                border-left: none;
-            }
-            
-            .folders-container {
-                grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-                gap: 10px;
+                padding: 8px 10px;
+                font-size: 0.85rem;
+                min-width: 70px;
+                margin: 0 3px;
             }
             
             .login-form {
@@ -373,16 +378,25 @@
             .login-form h2 {
                 font-size: 1.3rem;
             }
+            
+            .sticky-header {
+                padding: 10px 0;
+            }
         }
 
         @media (max-width: 360px) {
-            .folders-container {
-                grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            .container {
+                margin-top: 120px;
             }
             
             .tab-button {
+                padding: 6px 8px;
                 font-size: 0.8rem;
-                padding: 6px 3px;
+                min-width: 60px;
+            }
+            
+            header h1 {
+                font-size: 1.3rem;
             }
         }
     </style>
@@ -409,14 +423,17 @@
 
     <!-- Main Content -->
     <div class="container" id="mainContent" style="display: none;">
-        <header>
-            <h1>Study Hub</h1>
+        <!-- Sticky Header -->
+        <div class="sticky-header">
+            <header>
+                <h1>Study Hub</h1>
+            </header>
             <nav class="tabs">
                 <button class="tab-button active" data-tab="class">Class</button>
                 <button class="tab-button" data-tab="oracle">Oracle</button>
                 <button class="tab-button" data-tab="other">Other</button>
             </nav>
-        </header>
+        </div>
 
         <main>
             <!-- Class Tab -->
