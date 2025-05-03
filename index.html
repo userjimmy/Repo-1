@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4285f4;
+            --secondary: #34a853;
+            --accent: #ea4335;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .sticky-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+            padding: 15px 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 15px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin-top: 150px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 10px;
+            padding: 0 10px;
+        }
+
+        header h1 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0;
+            background-color: white;
+            padding: 0 20px 15px;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .tab-button {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 1rem;
+            flex: 1;
+            text-align: center;
+            min-width: 100px;
+            margin: 0 5px;
+        }
+
+        .tab-button:hover {
+            color: var(--primary);
+        }
+
+        .tab-button.active {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .folders-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+            width: 100%;
+        }
+
+        .folder {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-width: 0;
+        }
+
+        .folder:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+
+        .folder i {
+            font-size: clamp(2rem, 8vw, 2.5rem);
+            color: #FFB74D;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .folder-name {
+            font-size: clamp(0.9rem, 3vw, 1rem);
+            word-break: break-word;
+        }
+
+        .files-container {
+            display: none;
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        .file {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+        }
+
+        .file i {
+            color: var(--accent);
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+
+        .file-actions a {
+            color: var(--primary);
+            margin-left: 8px;
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+
+        .back-button {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .loading-spinner {
+            border: 3px solid rgba(0,0,0,0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error {
+            color: var(--accent);
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: auto;
+            padding: 15px;
+            width: 100%;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+        }
+
+        .logout-button {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+            font-size: 0.9rem;
+            width: auto;
+            display: inline-block;
+        }
+
+        .logout-button:hover {
+            background-color: #d32f2f;
+        }
+
+        .login-container {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .login-form {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .login-form h2 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .login-button {
+            width: auto;
+            padding: 8px 16px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block; /* Changed from inline-block to block */
+            margin: 20px auto 0; /* Top margin 20px, horizontal auto for centering */
+        }
+
+        .login-button:hover {
+            background-color: #3367d6;
+        }
+
+        .error-message {
+            color: var(--accent);
+            text-align: center;
+            margin-top: 10px;
+            display: none;
+            font-size: 0.9rem;
+        }
+
+        .github-link-container {
+            margin: 15px 0;
+            padding: 12px;
+            background: #f6f8fa;
+            border-radius: 6px;
+            border: 1px solid #e1e4e8;
+            overflow-wrap: break-word;
+        }
+
+        .github-link {
+            color: #0366d6;
+            text-decoration: none;
+            font-family: monospace;
+            word-break: break-all;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin-top: 140px;
+            }
+            
+            .tab-button {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+                min-width: 80px;
+            }
+            
+            .folder {
+                padding: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                margin-top: 130px;
+                padding: 10px;
+            }
+            
+            .tabs {
+                padding: 0 10px 10px;
+            }
+            
+            .tab-button {
+                padding: 8px 10px;
+                font-size: 0.85rem;
+                min-width: 70px;
+                margin: 0 3px;
+            }
+            
+            .login-form {
+                padding: 20px;
+            }
+            
+            .login-form h2 {
+                font-size: 1.3rem;
+            }
+            
+            .sticky-header {
+                padding: 10px 0;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .container {
+                margin-top: 120px;
+            }
+            
+            .tab-button {
+                padding: 6px 8px;
+                font-size: 0.8rem;
+                min-width: 60px;
+            }
+            
+            header h1 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Form -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-form">
+            <h2>Study Hub Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="login-button">Login</button>
+                <div class="error-message" id="errorMessage">Invalid username or password</div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container" id="mainContent" style="display: none;">
+        <!-- Sticky Header -->
+        <div class="sticky-header">
+            <header>
+                <h1>Study Hub</h1>
+            </header>
+            <nav class="tabs">
+                <button class="tab-button active" data-tab="class">Class</button>
+                <button class="tab-button" data-tab="oracle">Oracle</button>
+                <button class="tab-button" data-tab="other">Other</button>
+            </nav>
+        </div>
+
+        <main>
+            <!-- Class Tab -->
+            <section id="class" class="tab-content active">
+                <div class="folders-container" id="class-folders"></div>
+                <div class="files-container" id="class-files"></div>
+            </section>
+            
+            <!-- Oracle Tab -->
+            <section id="oracle" class="tab-content">
+                <div class="folders-container" id="oracle-folders"></div>
+                <div class="files-container" id="oracle-files"></div>
+            </section>
+            
+            <!-- Other Tab -->
+            <section id="other" class="tab-content">
+                <div class="folders-container" id="other-folders"></div>
+                <div class="files-container" id="other-files"></div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Study Hub</p>
+            <button class="logout-button" id="logoutButton">Logout</button>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show login form by default
+            document.getElementById('loginContainer').style.display = 'flex';
+            
+            // Login form handling
+            const loginForm = document.getElementById('loginForm');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                // Check credentials (username=James, password=Hubjames23)
+                if (username === 'James' && password === 'Hubjames23') {
+                    // Hide login form and show main content
+                    document.getElementById('loginContainer').style.display = 'none';
+                    document.getElementById('mainContent').style.display = 'block';
+                    
+                    // Initialize the application
+                    initializeApp();
+                } else {
+                    errorMessage.style.display = 'block';
+                }
+            });
+            
+            // Logout button handling
+            document.getElementById('logoutButton').addEventListener('click', function() {
+                // Show login form and hide main content
+                document.getElementById('loginContainer').style.display = 'flex';
+                document.getElementById('mainContent').style.display = 'none';
+                
+                // Clear password field
+                document.getElementById('password').value = '';
+                errorMessage.style.display = 'none';
+            });
+            
+            function initializeApp() {
+                // GitHub repository configuration with specific links
+                const folderLinks = {
+                    class: {
+                        'Units': 'https://github.com/userjimmy/Repo-1/blob/main/Units',
+                        'CATs': 'https://github.com/userjimmy/Repo-1/blob/main/CATs'
+                    },
+                    oracle: {
+                        'Oracle': 'https://drive.google.com/drive/u/4/folders/16Z57QWhtRTawz_JR63XkSQbLlLQQtoq8'
+                    },
+                    other: {
+                        'Other': 'https://github.com/userjimmy/Repo-1/blob/main/Other'
+                    }
+                };
+
+                // Tab switching functionality
+                const tabButtons = document.querySelectorAll('.tab-button');
+                const tabContents = document.querySelectorAll('.tab-content');
+                
+                tabButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        // Update active tab
+                        tabButtons.forEach(btn => btn.classList.remove('active'));
+                        tabContents.forEach(content => content.classList.remove('active'));
+                        
+                        button.classList.add('active');
+                        const tabId = button.dataset.tab;
+                        document.getElementById(tabId).classList.add('active');
+                        
+                        // Load folders for the tab
+                        loadFolders(tabId);
+                    });
+                });
+
+                // Load folders for a tab
+                function loadFolders(tabId) {
+                    const foldersContainer = document.getElementById(`${tabId}-folders`);
+                    foldersContainer.innerHTML = '';
+                    
+                    Object.keys(folderLinks[tabId]).forEach(folderName => {
+                        const folderUrl = folderLinks[tabId][folderName];
+                        
+                        const folderEl = document.createElement('div');
+                        folderEl.className = 'folder';
+                        folderEl.innerHTML = `
+                            <i class="fas fa-folder"></i>
+                            <div class="folder-name">${folderName}</div>
+                        `;
+                        
+                        folderEl.addEventListener('click', () => {
+                            loadFolderContents(tabId, folderName, folderUrl);
+                        });
+                        
+                        foldersContainer.appendChild(folderEl);
+                    });
+                }
+
+                // Load folder contents with GitHub link
+                function loadFolderContents(tabId, folderName, folderUrl) {
+                    const filesContainer = document.getElementById(`${tabId}-files`);
+                    const foldersContainer = document.getElementById(`${tabId}-folders`);
+                    
+                    filesContainer.innerHTML = `
+                        <button class="back-button" onclick="backToFolders('${tabId}')">
+                            <i class="fas fa-arrow-left"></i> Back to folders
+                        </button>
+                        <h3>${folderName}</h3>
+                        <div class="github-link-container">
+                            <a href="${folderUrl}" target="_blank" class="github-link">
+                                <i class="fab fa-github"></i> 
+                                View on GitHub: ${folderUrl}
+                            </a>
+                        </div>
+                    `;
+                    
+                    filesContainer.style.display = 'block';
+                    foldersContainer.style.display = 'none';
+                }
+
+                // Global function for back button
+                window.backToFolders = function(tabId) {
+                    document.getElementById(`${tabId}-files`).style.display = 'none';
+                    document.getElementById(`${tabId}-folders`).style.display = 'grid';
+                };
+
+                // Initialize first tab
+                loadFolders('class');
+            }
+        });
+    </script>
+</body>
+</html>
