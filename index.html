@@ -22,7 +22,7 @@
         }
 
         body {
-            background-color: var(--light-gray);
+            background-color: floralwhite;
             color: var(--dark-gray);
             line-height: 1.6;
             display: flex;
@@ -35,7 +35,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            background-color: white;
+            background-color: blueviolet;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             z-index: 100;
             padding: 15px 0;
@@ -59,7 +59,7 @@
         }
 
         header h1 {
-            color: var(--primary);
+            color: black;
             margin-bottom: 10px;
             font-size: clamp(1.5rem, 5vw, 2.2rem);
         }
@@ -68,7 +68,7 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 0;
-            background-color: white;
+            background-color: blueviolet;
             padding: 0 20px 15px;
             width: 100%;
             max-width: 800px;
@@ -91,17 +91,17 @@
         }
 
         .tab-button:hover {
-            color: var(--primary);
+            color: floralwhite;
         }
 
         .tab-button.active {
-            color: var(--primary);
-            border-color: var(--primary);
+            color: floralwhite;
+            border-color: floralwhite;
         }
 
         .tab-content {
             display: none;
-            background: white;
+            background: blueviolet;
             border-radius: 8px;
             padding: 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -141,8 +141,8 @@
 
         .folder:hover {
             transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border-color: var(--primary);
+            box-shadow: 0 4px 8px black;
+            border-color: black;
         }
 
         .folder i {
@@ -188,13 +188,17 @@
         .back-button {
             background: none;
             border: none;
-            color: var(--primary);
+            color: floralwhite;
             cursor: pointer;
             margin-bottom: 10px;
             font-size: 0.95rem;
             display: flex;
             align-items: center;
             gap: 5px;
+        }
+
+        .back-button:hover {
+            color: black;
         }
 
         .loading-spinner {
@@ -253,7 +257,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.5);
+            background-color: floralwhite;
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -261,9 +265,9 @@
         }
 
         .login-form {
-            background-color: white;
+            background-color: blueviolet;
             padding: 25px;
-            border-radius: 8px;
+            border-radius: 40px;
             width: 100%;
             max-width: 400px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
@@ -272,7 +276,7 @@
         .login-form h2 {
             text-align: center;
             margin-bottom: 15px;
-            color: var(--primary);
+            color: black;
             font-size: 1.5rem;
         }
 
@@ -291,7 +295,7 @@
             width: 100%;
             padding: 10px;
             border: 1px solid #ddd;
-            border-radius: 4px;
+            border-radius: 20px;
             font-size: 1rem;
         }
 
@@ -301,7 +305,7 @@
             background-color: var(--primary);
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 15px;
             font-size: 0.9rem;
             cursor: pointer;
             transition: background-color 0.3s;
