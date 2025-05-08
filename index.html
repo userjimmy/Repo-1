@@ -454,19 +454,16 @@
             <!-- Class Tab -->
             <section id="class" class="tab-content active">
                 <div class="folders-container" id="class-folders"></div>
-                <div class="files-container" id="class-files"></div>
             </section>
             
             <!-- Oracle Tab -->
             <section id="oracle" class="tab-content">
                 <div class="folders-container" id="oracle-folders"></div>
-                <div class="files-container" id="oracle-files"></div>
             </section>
             
             <!-- Other Tab -->
             <section id="other" class="tab-content">
                 <div class="folders-container" id="other-folders"></div>
-                <div class="files-container" id="other-files"></div>
             </section>
         </main>
 
@@ -564,42 +561,14 @@
                             <div class="folder-name">${folderName}</div>
                         `;
                         
+                        // Open Google Drive link when folder is clicked
                         folderEl.addEventListener('click', () => {
-                            loadFolderContents(tabId, folderName, folderUrl);
+                            window.open(folderUrl, '_blank');
                         });
                         
                         foldersContainer.appendChild(folderEl);
                     });
                 }
-
-                // Load folder contents with Google Drive link
-                function loadFolderContents(tabId, folderName, folderUrl) {
-                    const filesContainer = document.getElementById(`${tabId}-files`);
-                    const foldersContainer = document.getElementById(`${tabId}-folders`);
-                    
-                    filesContainer.innerHTML = `
-                        <button class="back-button" onclick="backToFolders('${tabId}')">
-                            <i class="fas fa-arrow-left"></i> Back to folders
-                        </button>
-                        <h3>${folderName}</h3>
-                        <div class="drive-link-container">
-                            <i class="fab fa-google-drive"></i>
-                            <a href="${folderUrl}" target="_blank" class="drive-link">
-                                <span class="drive-link-text">${folderUrl}</span>
-                                View ${folderName} on Google Drive
-                            </a>
-                        </div>
-                    `;
-                    
-                    filesContainer.style.display = 'block';
-                    foldersContainer.style.display = 'none';
-                }
-
-                // Global function for back button
-                window.backToFolders = function(tabId) {
-                    document.getElementById(`${tabId}-files`).style.display = 'none';
-                    document.getElementById(`${tabId}-folders`).style.display = 'grid';
-                };
 
                 // Initialize first tab
                 loadFolders('class');
